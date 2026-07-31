@@ -1,7 +1,11 @@
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
+
+# Create the presentations directory if it doesn't exist
+os.makedirs('presentations', exist_ok=True)
 
 # PART 1: Initial Data Exploration
 
@@ -27,12 +31,12 @@ spark_df.select('MARRIAGE').distinct().show()
 # Plot Raw Categories
 edu_pd = spark_df.groupBy('EDUCATION').count().toPandas()
 edu_pd.plot(kind='bar', x='EDUCATION', y='count', title='Education (Raw)')
-plt.savefig('education_raw.png', bbox_inches='tight')
+plt.savefig('presentations/education_raw.png', bbox_inches='tight')
 plt.show()
 
 mar_pd = spark_df.groupBy('MARRIAGE').count().toPandas()
 mar_pd.plot(kind='bar', x='MARRIAGE', y='count', title='Marriage (Raw)')
-plt.savefig('marriage_raw.png', bbox_inches='tight')
+plt.savefig('presentations/marriage_raw.png', bbox_inches='tight')
 plt.show()
 
 
@@ -58,13 +62,13 @@ spark_df.select('MARRIAGE').distinct().show()
 edu_binned_pd = spark_df.groupBy('EDUCATION').count().toPandas()
 edu_binned_pd.plot(kind='bar', x='EDUCATION', y='count', title='Education (Binned)', legend=False)
 plt.xticks(rotation=0)
-plt.savefig('education_binned.png', bbox_inches='tight')
+plt.savefig('presentations/education_binned.png', bbox_inches='tight')
 plt.show()
 
 mar_binned_pd = spark_df.groupBy('MARRIAGE').count().toPandas()
 mar_binned_pd.plot(kind='bar', x='MARRIAGE', y='count', title='Marriage (Binned)', legend=False)
 plt.xticks(rotation=0)
-plt.savefig('marriage_binned.png', bbox_inches='tight')
+plt.savefig('presentations/marriage_binned.png', bbox_inches='tight')
 plt.show()
 
 
@@ -80,7 +84,7 @@ target_pd.plot(kind='bar', x='default_label', y='count', title='Class Balance', 
 plt.xlabel('Target Status')
 plt.ylabel('Count')
 plt.xticks(rotation=0)
-plt.savefig('class_balance.png', bbox_inches='tight')
+plt.savefig('presentations/class_balance.png', bbox_inches='tight')
 plt.show()
 
 
@@ -96,7 +100,7 @@ plt.xlabel('Target Status')
 plt.ylabel('Count')
 plt.xticks(rotation=0)
 plt.legend(title='Sex')
-plt.savefig('default_by_sex.png', bbox_inches='tight')
+plt.savefig('presentations/default_by_sex.png', bbox_inches='tight')
 plt.show()
 
 # Clean up
